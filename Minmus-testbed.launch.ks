@@ -1,0 +1,9 @@
+// Minmus-testbed.launch v1.0.0
+WAIT 5.
+
+SET TARGET TO "Minmus".
+
+UNTIL TARGET:ORBIT:LAN > 350
+{
+	NOTIFY(TARGET:ORBIT:LAN).
+}
