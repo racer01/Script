@@ -1,4 +1,4 @@
-// Generalized Boot Script v1.0.0
+// Generalized Boot Script v1.0.5
 // rcr
 
 // The ship will use updateScript to check for new commands from KSC.
@@ -103,7 +103,11 @@ IF STATUS = "PRELAUNCH"
 		DELETEFROM("launch.ks", 1).
 		DOWNLOAD(launchScript).
 		RENAME launchScript TO "launch.ks".
+		REQUIRE("LIB_LNC.ks").
+		WAIT 3.
+		TIMER(5).
 		RUN launch.ks.
+		DELETE launch.ks.
 	}
 }
 
@@ -111,10 +115,11 @@ IF STATUS = "PRELAUNCH"
 // If so, download and run them.
 IF HAS_FILE(updateScript, 0)
 {
-	DOWNLOAD(updateScript).
-	DELETEFROM(updateScript, 0).
 	DELETEFROM(updateScript, 1).
+	DELETEFROM("update.ks", 1).
+	DOWNLOAD(updateScript).
 	RENAME updateScript TO "update.ks".
+	DELETEFROM(updateScript, 0).
 	RUN update.ks.
 	DELETE update.ks.
 }
